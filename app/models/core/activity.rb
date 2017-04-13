@@ -23,7 +23,7 @@ module Core
                 :external_user_status_update,
                 :external_user_exceeded_throttle,
                 :external_user_analysis_latest_posts,
-                :external_post_speaker_forbidden,
+                :external_post_speaker_repost_error,
                 :blacklist_user_banned_word_usage
               ]
 

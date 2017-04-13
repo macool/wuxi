@@ -15,7 +15,7 @@ module Speaker
           else
             raise @exception
           end
-        when Twitter::Error::Forbidden
+        when Twitter::Error::Forbidden, Twitter::Error::NotFound
           log_activity!
         else
           raise @exception
@@ -31,7 +31,7 @@ module Speaker
       def log_activity!
         Core::Activity.create!(
           subject: @external_post,
-          action: :external_post_speaker_forbidden,
+          action: :external_post_speaker_repost_error,
           predicate: { exception: @exception.to_s }
         )
       end
