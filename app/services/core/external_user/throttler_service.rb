@@ -9,7 +9,6 @@ module Core
       end
 
       def allow_more?
-        time_ago = MINUTES_WINDOW.minutes.ago
         exceeded = @external_user.posts.since(time_ago).count >= MAX_PER_WINDOW
         if exceeded
           create_activity! if @log_activity
@@ -30,13 +29,17 @@ module Core
 
       private
 
+      def time_ago
+        MINUTES_WINDOW.minutes.ago
+      end
+
       def create_activity!
         Core::Activity.create!(
           subject: @external_user,
           action: :external_user_exceeded_throttle,
           predicate: {
             count: @external_user.posts.since(time_ago).count,
-            desc: "posts in last #{minutes_window} minutes. since #{time_ago}"
+            desc: "posts in last #{MINUTES_WINDOW} minutes. since #{time_ago}"
           }
         )
       end
