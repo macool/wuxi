@@ -10,7 +10,7 @@ module Speaker
         update_external_post_status!
         case @exception
         when Twitter::Error::Unauthorized
-          if @exception.to_s =~ "You have been blocked"
+          if @exception.to_s =~ /You have been blocked/
             @external_post.external_user.update!(status: :blocked_us)
           else
             raise @exception
