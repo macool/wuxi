@@ -11,26 +11,29 @@ module Core
         def run
           @saved = 0
           analyse_search_results!
-          puts "saved #{@saved} posts for #{@external_provider}"
+          log "saved #{@saved} posts for #{@external_provider}"
         end
 
         private
 
+        def log(str)
+          Rails.logger.info "[#{Time.now}] #{self.class}: #{str}"
+        end
+
         def analyse_search_results!
           search_results.each do |tweet|
-            puts "analyse tweet #{tweet.id}"
             if save?(tweet)
               @saved += 1
             end
             if @saved >= collector_size
-              puts "exceeded collector size #{collector_size}"
+              log "exceeded collector size #{collector_size}"
               return
             end
           end
         end
 
         def search_results
-          puts "searching #{@external_provider.account.searchterm}"
+          log "searching #{@external_provider.account.searchterm}"
           last_post = @external_provider.posts.latest.first
           twitter_client.search(
             @external_provider.account.searchterm,
