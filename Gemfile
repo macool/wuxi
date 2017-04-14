@@ -48,6 +48,7 @@ gem "sidekiq-scheduler"
 gem "redis-namespace"
 gem "httparty"
 gem "mongo_session_store-rails4", github: "brianhempel/mongo_session_store"
+gem "remote_syslog_logger"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

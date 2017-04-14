@@ -53,6 +53,11 @@ Rails.application.configure do
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  config.logger = RemoteSyslogLogger.new(
+    Rails.application.secrets.papertrail_host,
+    Rails.application.secrets.papertrail_token.
+    program: "wuxi-production"
+  )
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
