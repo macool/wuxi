@@ -38,6 +38,7 @@ module Core
           our_language: @external_post.raw_hash["lang"]
         )
         unless post_response.response.is_a?(Net::HTTPServiceUnavailable)
+          Rails.logger.info "bitext_response: #{post_response.body}"
           fail "working? TODO #{post_response.body}"
         end
         true # yeah
