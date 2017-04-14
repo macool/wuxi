@@ -55,7 +55,7 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
   config.logger = RemoteSyslogLogger.new(
     Rails.application.secrets.papertrail_host,
-    Rails.application.secrets.papertrail_token.
+    Rails.application.secrets.papertrail_token,
     program: "wuxi-production"
   )
 
