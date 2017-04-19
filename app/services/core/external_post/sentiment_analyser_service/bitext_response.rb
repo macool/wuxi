@@ -17,6 +17,7 @@ module Core
         end
 
         def ok_for_reposting?
+          Rails.logger.info "[#{self.class}] #ok_for_reposting? response.body: #{@response.body}"
           scores = @response["sentimentanalysis"].map do |analysis|
             analysis["score"].to_f
           end
