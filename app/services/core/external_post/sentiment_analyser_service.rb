@@ -37,11 +37,24 @@ module Core
           text: @external_post.raw_hash["text"],
           our_language: @external_post.raw_hash["lang"]
         )
-        unless post_response.response.is_a?(Net::HTTPServiceUnavailable)
-          Rails.logger.info "bitext_response: #{post_response.body}"
-          fail "working? TODO #{post_response.body}"
+        post_response = BitextResponse.new(post_response)
+        if post_response.failed?
+          ##
+          # we can't rely on bitext
+          # if server is 2 busy or something we'll say it's okay
+          log "bitext POST failed. Response: #{post_response.body}"
+          return true
         end
-        true # yeah
+        get_response = bitext_api.get_sentiment(post_response.result_id)
+        get_response = BitextResponse.new(get_response)
+        if get_response.ok?
+          Brain::ExternalAnalysis.create!(
+            subject: @external_post,
+            provider: :bitext,
+            response: get_response.parsed_response
+          )
+        end
+        get_response.ok_for_reposting?
       end
 
       def analyse_with_meaningcloud!
@@ -59,6 +72,10 @@ module Core
           )
         end
         meaningcloud.ok_for_reposting?
+      end
+
+      def log(str)
+        Rails.logger.info "[#{self.class}] #{str}"
       end
     end
   end

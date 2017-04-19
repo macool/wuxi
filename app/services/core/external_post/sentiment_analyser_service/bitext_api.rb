@@ -3,7 +3,7 @@ module Core
     class SentimentAnalyserService
       class BitextApi
         include HTTParty
-        base_uri "https://svc02.pre.api.bitext.com"
+        base_uri "https://svc02.api.bitext.com"
         debug_output
 
         # Available languages:
@@ -46,8 +46,8 @@ module Core
 
         def headers
           {
-            "Content-Type" => "application/json",
-            "Authorization" => "bearer #{token}"
+            "Authorization" => "bearer #{token}",
+            "Content-Type" => "application/json"
           }
         end
 
