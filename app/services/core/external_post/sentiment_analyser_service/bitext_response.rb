@@ -17,7 +17,11 @@ module Core
         end
 
         def ok_for_reposting?
-          Rails.logger.info "[#{self.class}] #ok_for_reposting? response.body: #{@response.body}"
+          if @response["sentimentanalysis"].blank?
+            ##
+            # TODO remove debugging
+            Rails.logger.info "[#{self.class}] WARN: #ok_for_reposting? response.body: #{@response.body}"
+          end
           scores = @response["sentimentanalysis"].map do |analysis|
             analysis["score"].to_f
           end
