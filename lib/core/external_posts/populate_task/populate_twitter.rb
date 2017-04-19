@@ -17,7 +17,7 @@ module Core
         private
 
         def log(str)
-          Rails.logger.info "[#{Time.now}] #{self.class}: #{str}"
+          Rails.logger.info "[#{self.class}] #{str}"
         end
 
         def analyse_search_results!
