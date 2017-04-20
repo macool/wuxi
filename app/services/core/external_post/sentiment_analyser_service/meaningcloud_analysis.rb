@@ -3,7 +3,7 @@ module Core
     class SentimentAnalyserService
       class MeaningcloudAnalysis
         def initialize(external_post)
-          @external_post
+          @external_post = external_post
         end
 
         def perform!
