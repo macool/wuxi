@@ -9,7 +9,12 @@ module Core
         end
 
         def failed?
-          @response.response.is_a?(Net::HTTPServiceUnavailable)
+          failed = @response.response.is_a?(Net::HTTPServiceUnavailable)
+          failed = failed || @response["success"] == false
+          if failed
+            log "WARN: #failed?: true! response.body: #{@response.body}"
+          end
+          failed
         end
 
         def result_id
@@ -20,7 +25,7 @@ module Core
           if @response["sentimentanalysis"].blank?
             ##
             # TODO remove debugging
-            Rails.logger.info "[#{self.class}] WARN: #ok_for_reposting? response.body: #{@response.body}"
+            log "WARN: #ok_for_reposting? response.body: #{@response.body}"
           end
           scores = @response["sentimentanalysis"].map do |analysis|
             analysis["score"].to_f
@@ -31,6 +36,16 @@ module Core
 
         def ok?
           @response.response.is_a?(Net::HTTPOK)
+        end
+
+        def incomplete?
+          @response["status"] == "incomplete"
+        end
+
+        private
+
+        def log(str)
+          Rails.logger.info "[#{self.class}] #{str}"
         end
       end
     end

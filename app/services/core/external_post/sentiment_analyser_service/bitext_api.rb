@@ -35,7 +35,8 @@ module Core
           )
         end
 
-        def get_sentiment(result_id)
+        def get_sentiment(result_id:)
+          fail "define :result_id!" if result_id.blank?
           self.class.get(
             "/sentiment/#{result_id}",
             headers: headers
@@ -52,7 +53,8 @@ module Core
         end
 
         def get_language(language)
-          BITEXT_LANGUAGES.fetch(language) { language }
+          default_language = BITEXT_LANGUAGES[:es]
+          BITEXT_LANGUAGES.fetch(language) { default_language }
         end
 
         def token
