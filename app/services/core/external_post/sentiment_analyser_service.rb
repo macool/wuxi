@@ -33,14 +33,14 @@ module Core
 
       def analyse_with_bitext!
         BitextAnalysis.new(
-          external_post
+          @external_post
         ).perform!
          .ok_for_reposting?
       end
 
       def analyse_with_meaningcloud!
         MeaningcloudAnalysis.new(
-          external_post
+          @external_post
         ).perform!
          .ok_for_reposting?
       end

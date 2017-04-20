@@ -53,6 +53,9 @@ module Core
         end
 
         def get_language(language)
+          ##
+          # TODO
+          # define default language at external provider / account level
           default_language = BITEXT_LANGUAGES[:es]
           BITEXT_LANGUAGES.fetch(language) { default_language }
         end
