@@ -44,10 +44,6 @@ module Core
         ).perform!
          .ok_for_reposting?
       end
-
-      def log(str)
-        Rails.logger.info "[#{self.class}] #{str}"
-      end
     end
   end
 end

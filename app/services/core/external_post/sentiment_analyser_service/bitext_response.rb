@@ -13,6 +13,7 @@ module Core
           failed = failed || @response["success"] == false
           if failed
             log "WARN: #failed?: true! response.body: #{@response.body}"
+            log "WARN: #failed?: true! response.request: #{@response.request.raw_body}"
           end
           failed
         end

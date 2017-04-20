@@ -64,6 +64,10 @@ module Core
         def bitext_api
           @bitext_api ||= BitextApi.new
         end
+
+        def log(str)
+          Rails.logger.info "[#{self.class}] #{str}"
+        end
       end
     end
   end
