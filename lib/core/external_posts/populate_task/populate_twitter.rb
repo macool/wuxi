@@ -11,7 +11,7 @@ module Core
         def run
           @saved = 0
           analyse_search_results!
-          log "saved #{@saved} posts for #{@external_provider}"
+          log "saved #{@saved} posts for #{@external_provider} (searchterm: #{@external_provider.account.searchterm})"
         end
 
         private
@@ -26,14 +26,13 @@ module Core
               @saved += 1
             end
             if @saved >= collector_size
-              log "exceeded collector size #{collector_size}"
+              log "WARN: exceeded collector size #{collector_size}"
               return
             end
           end
         end
 
         def search_results
-          log "searching #{@external_provider.account.searchterm}"
           last_post = @external_provider.posts.latest.first
           twitter_client.search(
             @external_provider.account.searchterm,
