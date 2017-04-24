@@ -1,0 +1,23 @@
+(function(){
+  var id = '<%= @external_post.id %>',
+      container = '.content .meta .repost-wrapper:not([disabled])',
+      $selector = $('#external-post-id-' + id + ' ' + container);
+
+  var textContent;
+
+  <% if @action_name == "repost" %>
+    textContent = 'will be reposted';
+  <% else %>
+    textContent = 'will not be reposted';
+  <% end %>
+
+  var $text = $('<span />', {
+    text: textContent,
+    class: 'like reposting-status-response'
+  });
+  $selector.prev().after($text);
+  $selector.attr({
+    "disabled": "disabled",
+    "href"    : null
+  });
+})();

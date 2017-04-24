@@ -1,4 +1,4 @@
-.event.external-post-event
+.event.external-post-event id="external-post-id-#{external_post.id}"
   .label
     = external_post.external_user.with_link do
       = image_tag external_post.external_user.image
@@ -41,12 +41,22 @@
                   remote: true do
           i.icon.angle.up
 
-        - if external_post.status.analysed? || external_post.manually_reposted?
-          = link_to repost_admin_account_external_post_path(external_post, account_id: external_post.external_provider.account.id), class: "like", method: :post, disabled: external_post.manually_reposted? do
+        span.like ·
+        - if external_post.status.analysed? || external_post.status.new? || external_post.manually_reposted?
+          = link_to repost_admin_account_external_post_path(external_post,
+                                                            account_id: external_post.external_provider.account.id),
+                    class: "like repost-wrapper",
+                    method: :post,
+                    disabled: external_post.manually_reposted?,
+                    remote: true do
             i.icon.retweet
 
       - if external_post.status.will_repost?
-        = link_to cancel_repost_admin_account_external_post_path(external_post, account_id: external_post.external_provider.account.id), class: "like", method: :post do
+        = link_to cancel_repost_admin_account_external_post_path(external_post,
+                                                       account_id: external_post.external_provider.account.id),
+                  class: "like repost-wrapper",
+                  method: :post,
+                  remote: true do
           i.icon.remove.circle
 
       span.show-only-on-hover ·
