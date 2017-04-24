@@ -10,10 +10,11 @@
       br
       = f.check_box :active
 
-    .field.six.wide
+    .field.twelve.wide
       = f.label :repost
       br
-      = f.check_box :repost
+      = f.select :repost,
+                 f.object.class.repost.options
 
   = f.link_to_remove class: "ui-popup",
                      data: { content: "eliminar" } do

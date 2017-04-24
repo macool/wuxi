@@ -5,7 +5,7 @@ module Speaker
 
       def speak!
         Core::ExternalProvider.active
-                              .repost
+                              .for_reposting
                               .with_provider(:twitter)
                               .each do |external_provider|
             scope = external_provider.posts

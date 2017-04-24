@@ -10,7 +10,7 @@ module Core
     PROVIDERS = SUPPORTED_PROVIDERS.keys.map(&:to_s).freeze
 
     field :active, type: Boolean, default: false
-    field :repost, type: Boolean, default: false
+    field :repost, type: String
     field :provider, type: String
     field :uid, type: String
     field :info, type: Hash
@@ -27,6 +27,10 @@ module Core
     enumerize :provider,
               in: [:twitter],
               scope: true
+    enumerize :repost,
+              in: [:none, :all, :whitelist],
+              scope: true,
+              default: :none
 
     begin :relationships
       belongs_to :account,
@@ -36,7 +40,7 @@ module Core
     end
 
     scope :active, ->{ where(active: true) }
-    scope :repost, ->{ where(repost: true) }
+    scope :for_reposting, ->{ with_repost(:all, :whitelist) }
 
     def external_uri
       case provider

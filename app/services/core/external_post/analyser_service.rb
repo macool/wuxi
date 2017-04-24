@@ -12,7 +12,8 @@ module Core
         @external_post.update!(status: :analysed)
 
         whitelist = @external_post.external_user.status.whitelist?
-        if whitelist && sentiment_analysis.positive?
+        repost_all = @external_post.external_provider.repost.all?
+        if sentiment_analysis.positive? && (whitelist || repost_all)
           # reposting handled by the speaker
           @external_post.update!(status: :will_repost)
         end

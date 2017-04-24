@@ -49,8 +49,9 @@ module Core
 
       def parse_external_post_response(response)
         ##
+        # TODO
         # may be better outside?
-        analysis = Brain::ScheduledAnalysis.find response["id"]
+        analysis = Brain::ScheduledAnalysis.find response.fetch("id")
         external_post = analysis.subject
         analysis.update!(status: :done)
         Brain::ExternalAnalysis.create!(
@@ -59,7 +60,9 @@ module Core
           provider: :sentiment140,
           response: sanitize_post_response(response)
         )
-        if response["polarity"] == 4 # AKA P+
+        whitelist = external_post.external_user.status.whitelist?
+        repost_all = external_post.external_provider.repost.all?
+        if response.positive? && (whitelist || repost_all)
           external_post.update!(status: :will_repost)
         end
       end
