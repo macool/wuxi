@@ -3,9 +3,15 @@
     img src="http://semantic-ui.com/images/logo.png" style=("width: 35px;") /
   a> href="/" Vengadores
   a.item href='#' Caca
-  = link_to "Cuentas",
-            admin_accounts_path,
-            class: "item #{'active' if controller_name == 'accounts'}"
+  .item
+    = link_to "Cuentas",
+              admin_accounts_path,
+              class: "header"
+    .menu
+      - active_dashboard_accounts.each do |account|
+        = link_to account.name,
+                  admin_account_path(account),
+                  class: "item #{'active' if controller_name == 'accounts' && params[:id] == account.id.to_s}"
   = link_to "Banned words",
             admin_banned_words_path,
             class: "item #{'active' if controller_name == 'banned_words'}"
