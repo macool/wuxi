@@ -1,21 +1,22 @@
 h4
   = @account.name
 
-' rules:
-- @account.rules.each do |p|
-  div
-    = p.kind
-    ' :
-    => p.content
-    ' -
-    => p.allowed ? 'permitido' : 'no permitido'
-    = p.case_sensitive ? '(case sensitive)' : ''
+.ui.styled.accordion
+  .title
+    i.dropdown.icon
+    ' searchterm:
+    = @account.searchterm
+  .content
+    - @account.rules.each do |p|
+      div
+        = p.kind
+        ' :
+        => p.content
+        ' -
+        => p.allowed ? 'permitido' : 'no permitido'
+        = p.case_sensitive ? '(case sensitive)' : ''
 
-div
-  ' searchterm:
-  = @account.searchterm
-
-.ui.secondary.menu
+.ui.secondary.menu.stackable
   - Core::ExternalPost.status.values.each do |status|
     = link_to status,
               admin_account_path(@account, posts_status: status),

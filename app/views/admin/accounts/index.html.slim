@@ -1,38 +1,29 @@
-.ui.grid
-  .four.wide.column
+.ui.center.aligned.container
+  h1 Cuentas
 
-  .eight.wide.column
-    .ui.grid
-      .eight.wide.column
-        .ui.center.aligned.container
-          h1 Cuentas
+.ui.container.center.aligned
+  table.ui.single.line.table.unstackable
+    thead
+      tr
+        th Nombre
+        th
+        th
+    tbody
+      = content_tag_for :tr, @accounts do |account|
+        td = link_to account.name,
+                      admin_account_path(id: account.id)
+        td
+          - account.external_providers.each do |external_provider|
+            = link_to external_provider.external_uri,
+                      class: "ui-popup",
+                      target: "_blank",
+                      data: { variation: "basic",
+                        content: external_provider.nickname } do
+              i.icon class="#{external_provider.provider}"
+        td
+          = link_to "editar",
+                    edit_admin_account_path(account)
 
-    .ui.grid
-      .eight.wide.column
-        table.ui.single.line.table
-          thead
-            tr
-              th Nombre
-              th
-              th
-          tbody
-            = content_tag_for :tr, @accounts do |account|
-              td = link_to account.name,
-                            admin_account_path(id: account.id)
-              td
-                - account.external_providers.each do |external_provider|
-                  = link_to external_provider.external_uri,
-                            class: "ui-popup",
-                            target: "_blank",
-                            data: { variation: "basic",
-                              content: external_provider.nickname } do
-                    i.icon class="#{external_provider.provider}"
-              td
-                = link_to "editar",
-                          edit_admin_account_path(account)
-
-    .ui.grid
-      .eight.wide.column
-        = link_to "Agregar cuenta",
-                  new_admin_account_path,
-                  class: "fluid ui teal button"
+  = link_to "Agregar cuenta",
+            new_admin_account_path,
+            class: "fluid ui teal button"
