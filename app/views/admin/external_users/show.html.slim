@@ -38,7 +38,7 @@
       h4.ui.header Activity
 
       - @external_user.activity.decorate.each do |activity|
-        = render "activity", activity: activity
+        = render activity
 
     .ui.feed
       h4.ui.header Latest posts

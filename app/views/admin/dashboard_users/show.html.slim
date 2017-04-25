@@ -1,0 +1,47 @@
+.ui.center.aligned.container
+  h1 Dashboard User
+
+.ui.container
+  = render "by_status_menu"
+
+  .ui.card
+    .image
+      = image_tag @admin_user.full_image
+    .content
+      .header
+        = @admin_user.link_to_profile do
+          | @
+          = @admin_user.nickname
+
+
+      div = @admin_user.info["name"]
+      .meta
+        = mail_to @admin_user.info["email"]
+      - @admin_user.info["urls"].each do |name, url|
+        .meta
+          = link_to url, target: "_blank" do
+            = name
+            ' :
+            = url
+    - if @admin_user.info["description"].present?
+      .extra.content
+        = @admin_user.info["description"]
+    .extra.content
+      = form_for @admin_user,
+                 url: admin_dashboard_user_path(@admin_user),
+                 class: "ui form" do |f|
+        ' role:
+        = f.select :role,
+                   f.object.class.role.options,
+                   {},
+                   class: "ui dropdown"
+
+  - [:recent_to_activity, :recent_from_activity].each do |activity_method|
+    .ui.feed.external-user-activities
+      h4.ui.header = activity_method
+
+      - activity = @admin_user.send activity_method, params[:page]
+      - activity.each do |activity|
+        = render activity.decorate
+
+      = paginate activity

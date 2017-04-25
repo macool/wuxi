@@ -28,6 +28,13 @@ module Core
               ]
 
     scope :latest, -> { order(created_at: :desc) }
+    scope :from_user, ->(user) { where(whodunit_id: user.id) }
+    scope :for_subject, ->(subject) {
+      where(
+        subject_id: subject.id,
+        subject_type: subject.class.name
+      )
+    }
 
     def subject=(new_subject)
       self.subject_id = new_subject.id
