@@ -31,6 +31,10 @@ module Core
           scores = @response["sentimentanalysis"].map do |analysis|
             analysis["score"].to_f
           end
+
+          # if no results
+          return true if scores.length == 0
+
           avg_score = scores.sum / scores.length
           avg_score > 0
         end
