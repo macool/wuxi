@@ -21,7 +21,10 @@ module Admin
           subject: @admin_user,
           whodunit_id: current_user.id,
           action: :admin_user_role_update,
-          predicate: { params: admin_user_params }
+          predicate: {
+            params: admin_user_params,
+            user_nickname: @admin_user.nickname
+          }
         )
         flash[:notice] = "yey updated!"
       else
