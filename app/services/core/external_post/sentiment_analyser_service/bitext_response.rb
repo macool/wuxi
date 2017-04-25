@@ -55,7 +55,7 @@ module Core
             "No contract found for that language"
           ]
           known_errors.none? do |error_message|
-            matches = @response.body["message"] == error_message
+            matches = @response["message"] == error_message
             if matches
               log("[bitext error]: #{error_message}")
             end
