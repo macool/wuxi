@@ -24,7 +24,8 @@ module Core
                 :external_user_exceeded_throttle,
                 :external_user_analysis_latest_posts,
                 :external_post_speaker_repost_error,
-                :blacklist_user_banned_word_usage
+                :blacklist_user_banned_word_usage,
+                :admin_user_role_update
               ]
 
     scope :latest, -> { order(created_at: :desc) }
