@@ -59,7 +59,7 @@ module Core
           KNOWN_ERRORS.none? do |error_message|
             matches = @response["message"] == error_message
             if matches
-              log("[bitext-error]: #{error_message} [lang]: #{@response.request.body["language"]}")
+              log("[bitext-error]: #{error_message} [lang]: #{@response.request.raw_body["language"]}")
             end
             matches
           end
