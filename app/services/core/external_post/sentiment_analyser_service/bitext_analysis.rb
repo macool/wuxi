@@ -15,7 +15,6 @@ module Core
           post_response = perform_post_request
           if post_response.failed?
             @post_failed = true
-            log "bitext POST failed. Response: #{post_response.body}"
           else
             @get_response = perform_get_request(post_response)
             if @get_response.ok?

@@ -11,7 +11,7 @@ module Core
         def failed?
           failed = @response.response.is_a?(Net::HTTPServiceUnavailable)
           failed = failed || @response["success"] == false
-          if failed
+          if failed && unkown_error?
             log "WARN: #failed?: true! response.body: #{@response.body}"
             log "WARN: #failed?: true! response.request: #{@response.request.raw_body}"
           end
@@ -48,6 +48,20 @@ module Core
         end
 
         private
+
+        def unkown_error?
+          known_errors = [
+            "Free request limit reached.",
+            "No contract found for that language"
+          ]
+          known_errors.none? do |error_message|
+            matches = @response.body["message"] == error_message
+            if matches
+              log("[bitext error]: #{error_message}")
+            end
+            matches
+          end
+        end
 
         def log(str)
           Rails.logger.info "[#{self.class}] #{str}"
