@@ -2,6 +2,16 @@ module Core
   class ExternalPost
     class SentimentAnalyserService
       class BitextResponse
+        class BitextContractExpired < ::StandardError; end
+
+        FATAL_ERRORS = {
+          "Contract expired" => BitextContractExpired
+        }.freeze
+        KNOWN_ERRORS = [
+          "Free request limit reached.",
+          "No contract found for that language"
+        ].freeze
+
         delegate :body, :parsed_response, to: :@response
 
         def initialize(response)
@@ -11,7 +21,7 @@ module Core
         def failed?
           failed = @response.response.is_a?(Net::HTTPServiceUnavailable)
           failed = failed || @response["success"] == false
-          if failed && unkown_error?
+          if failed && unkown_error? && not_fatal_error?
             log "WARN: #failed?: true! response.body: #{@response.body}"
             log "WARN: #failed?: true! response.request: #{@response.request.raw_body}"
           end
@@ -49,12 +59,19 @@ module Core
 
         private
 
+        def not_fatal_error?
+          FATAL_ERRORS.any? do |error_message, error_class|
+            is_fatal = @response["message"] == error_message
+            if is_fatal
+              log "[bitext FATAL]: #{error_message}"
+              raise error_class.new(@response.request.raw_body.to_s)
+            end
+            is_fatal
+          end
+        end
+
         def unkown_error?
-          known_errors = [
-            "Free request limit reached.",
-            "No contract found for that language"
-          ]
-          known_errors.none? do |error_message|
+          KNOWN_ERRORS.none? do |error_message|
             matches = @response["message"] == error_message
             if matches
               log("[bitext error]: #{error_message}")
