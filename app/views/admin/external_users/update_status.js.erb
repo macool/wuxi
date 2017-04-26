@@ -1,1 +1,16 @@
-$(".external-user-<%= @external_user.id %>-status").html("<%= @external_user.status %>");
+(function(){
+  'use strict';
+
+  var currentStatus = '<%= @external_user.status %>',
+      statusBtnSelector = '.update-external-user-status-btn',
+      $selector = $(".external-user-<%= @external_user.id %>-status");
+
+  $selector.html(currentStatus);
+
+  var parent = $selector.parents(".external-post-event");
+
+  parent.find(statusBtnSelector).removeAttr("disabled");
+
+  var currentStatusBtn = parent.find(statusBtnSelector + '.' + currentStatus);
+  currentStatusBtn.attr("disabled", "disabled");
+})();
