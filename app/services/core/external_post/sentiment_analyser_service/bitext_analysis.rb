@@ -13,7 +13,7 @@ module Core
         # complete yet so may need to retry
         def perform!
           post_response = perform_post_request
-          if post_response.failed?
+          if bitext_halted? || post_response.failed?
             @post_failed = true
           else
             @get_response = perform_get_request(post_response)
@@ -38,7 +38,12 @@ module Core
 
         private
 
+        def bitext_halted?
+          Rails.cache.read(BitextResponse::HALT_CACHE_KEY)
+        end
+
         def perform_get_request(post_response)
+          return if bitext_halted?
           response = bitext_api.get_sentiment(
             result_id: post_response.result_id
           )

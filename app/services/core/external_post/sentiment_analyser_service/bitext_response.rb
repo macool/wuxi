@@ -7,6 +7,7 @@ module Core
           "No contract found for that language",
           "Contract expired"
         ].freeze
+        HALT_CACHE_KEY = "bitext_analysis_halted".freeze
 
         delegate :body, :parsed_response, to: :@response
 
@@ -59,12 +60,29 @@ module Core
           KNOWN_ERRORS.none? do |error_message|
             matches = @response["message"] == error_message
             if matches
+              handle_known_error(error_message)
               raw_body = @response.request.raw_body
               language = raw_body[raw_body.index("language")..(raw_body.size - 1)]
               log("[bitext-error]: #{error_message} [lang]: #{language}")
             end
             matches
           end
+        end
+
+        def handle_known_error(kind)
+          case kind
+          when "Free request limit reached."
+            expiration_time = 12.hours
+          when "Contract expired"
+            expiration_time = 1.day
+          else
+            return
+          end
+          Rails.cache.write(
+            HALT_CACHE_KEY,
+            kind,
+            expires_in: expiration_time
+          )
         end
 
         def log(str)
