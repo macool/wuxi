@@ -2,11 +2,16 @@
   var btnSelector = '.trash-bin-post-btn',
       postWrapper = '#external-post-id-',
       postId = '<%= @external_post.id %>',
-      $btn = $(postWrapper + postId + ' ' + btnSelector);
+      $postEl = $(postWrapper + postId),
+      $btn = $postEl.find(btnSelector),
+      $repostBtn = $postEl.find('.repost-wrapper');
 
   $btn.attr({
     'href': null,
     'disabled': 'disabled'
   });
-  $btn.text('trash binned.');
+  $btn.text('trash binned');
+
+  $repostBtn.prev().remove();
+  $repostBtn.remove();
 })();
