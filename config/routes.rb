@@ -45,6 +45,7 @@ Rails.application.routes.draw do
         member do
           post :repost, as: :repost
           post :cancel_repost, as: :cancel_repost
+          post :trash_bin, as: :trash_bin
         end
       end
       resource :external_provider_registration,

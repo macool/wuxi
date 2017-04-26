@@ -22,6 +22,17 @@ module Admin
       generic_response
     end
 
+    def trash_bin
+      @external_post = Core::ExternalPost.find(params[:id])
+      @external_post.update!(
+        status: :trash_binned
+      )
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
+
     private
 
     def set_action_name

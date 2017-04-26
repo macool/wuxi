@@ -1,0 +1,12 @@
+(function(){
+  var btnSelector = '.trash-bin-post-btn',
+      postWrapper = '#external-post-id-',
+      postId = '<%= @external_post.id %>',
+      $btn = $(postWrapper + postId + ' ' + btnSelector);
+
+  $btn.attr({
+    'href': null,
+    'disabled': 'disabled'
+  });
+  $btn.text('trash binned.');
+})();

@@ -59,5 +59,14 @@
                   remote: true do
           i.icon.remove.circle
 
+      - if external_post.external_user.status.blacklist?
+        span.like ·
+        = link_to trash_bin_admin_account_external_post_path(external_post,
+                                                   account_id: external_post.external_provider.account.id),
+                  class: "like trash-bin-post-btn",
+                  method: :post,
+                  remote: true do
+          i.icon.trash
+
       span.show-only-on-hover ·
       span.show-only-on-hover = external_post.language

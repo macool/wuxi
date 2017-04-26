@@ -22,7 +22,8 @@ module Core
                 :will_repost, # scheduled for repost
                 :reposted,
                 :error_reposting,
-                :halted_by_user_throttler
+                :halted_by_user_throttler,
+                :trash_binned
               ],
               default: :new,
               scope: true,
