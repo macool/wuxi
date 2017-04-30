@@ -38,7 +38,7 @@ class Dashboard::StatsFetcherService
   end
 
   def external_posts_with_status(status)
-    external_posts.with_status(:analysed).count
+    external_posts.with_status(status).count
   end
 
   def external_posts
