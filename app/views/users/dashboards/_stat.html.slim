@@ -1,0 +1,16 @@
+.statistic
+  .label = t(".#{name}.#{key}")
+  .value.text
+    - icon_class = t(".#{name}.icon.#{key}", default: '')
+    - if icon_class.present?
+      i class='icon #{icon_class}'
+    =<> number_to_human stat
+    - if stat.blank?
+      | -
+
+    - if stat.present? && stat > 999
+      span.ui.smaller
+        br
+        | (
+        = number_with_delimiter stat
+        | )

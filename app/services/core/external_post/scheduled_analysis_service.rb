@@ -1,6 +1,9 @@
 module Core
   class ExternalPost
     class ScheduledAnalysisService
+      ##
+      # @note we're using only Sentiment140Api for the
+      # moment here
       class << self
         THROTTLE = 400
 

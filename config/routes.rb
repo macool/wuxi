@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
+  namespace :users do
+    resource :dashboard, only: :show
+  end
+
   namespace :admin do
     resources :dashboard_users
     resources :banned_words

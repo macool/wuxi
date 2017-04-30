@@ -12,6 +12,7 @@
  *
  *= require_tree .
  *= require_tree ./admin
+ *= require_tree ./users
  *= require_self
  *= require semantic
  */

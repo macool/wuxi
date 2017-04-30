@@ -56,6 +56,50 @@ es:
       messages:
         taken: ya está tomado
 
+  users:
+    dashboards:
+      show:
+        title:
+          main_stats: General
+          posts_stats: Tweets
+          users_stats: Users
+          external_analysis_stats: External analysis
+      stat:
+        main_stats:
+          external_posts_count: Tweets
+          external_users_count: Users
+          reposts_count: Retweets
+          icon:
+            external_posts_count: newspaper
+            external_users_count: users
+            reposts_count: retweet
+        posts_stats:
+          will_repost: Scheduled for reposting
+          icon:
+            new: newspaper
+            trash_binned: trash
+            analysed: cubes
+            will_repost: announcement
+            halted_by_user_throttler: volume off
+        users_stats:
+          whitelist: whitelisted
+          icon:
+            new: newspaper
+            whitelist: thumbs up
+            blacklist: thumbs down
+            blocked_us: ban
+            throttled_by_quota: volume off
+        external_analysis_stats:
+          scheduled: sentiment140 scheduled
+          icon:
+            scheduled: calculator
+        external_provider_stats:
+          icon:
+            tweets: newspaper
+            analysed: cubes
+            reposted: retweet
+            will_repost: announcement
+
   admin:
     core:
       activities:

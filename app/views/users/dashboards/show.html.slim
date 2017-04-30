@@ -1,0 +1,18 @@
+.ui.container.center.aligned
+  h1 Dashboard
+
+  p Some numbers..
+
+- @stat_groups.each do |name, stats|
+  h2 = t(".title.#{name}")
+  .ui.three.statistics
+    - stats.each do |key, stat|
+      = render "stat", key: key, stat: stat, name: name
+
+p by accounts..
+
+- @active_provider_stats.each do |external_provider, stats|
+  h3 = external_provider
+  .ui.three.statistics
+    - stats.each do |key, stat|
+      = render "stat", key: key, stat: stat, name: :external_provider_stats

@@ -23,7 +23,8 @@ module Brain
                 :bitext,
                 :meaningcloud,
                 :sentiment140
-              ]
+              ],
+              scope: true
 
     def subject=(new_subject)
       self.subject_id = new_subject.id
