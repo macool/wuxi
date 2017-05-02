@@ -10,9 +10,10 @@ module Core
         def ok?
           @response["status"]["msg"] == "OK"
         # TODO catching meaningcloud exceptions?
-        rescue NoMethodError
+        rescue NoMethodError => e
           log "meaningcloud response error!"
           Rails.logger.info @response
+          raise e
         end
 
         def ok_for_reposting?
