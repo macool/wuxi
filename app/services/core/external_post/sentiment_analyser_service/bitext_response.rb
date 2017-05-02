@@ -48,7 +48,7 @@ module Core
         end
 
         def ok?
-          @response.response.is_a?(Net::HTTPOK)
+          @response.response.is_a?(Net::HTTPOK) && !incomplete?
         end
 
         def incomplete?

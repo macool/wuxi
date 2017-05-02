@@ -53,10 +53,12 @@ module Core
             result_id: post_response.result_id
           )
           response = BitextResponse.new(response)
-          if response.incomplete?
-            # let's wait for the api for 1s before querying
+          tries = 1
+          if response.incomplete? && tries < 10
+            # let's wait for the api for 3s before querying
             # again
-            sleep 1
+            sleep 3
+            tries += 1
             response = perform_get_request(post_response)
           end
           response
