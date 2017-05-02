@@ -69,6 +69,7 @@ module Core
           )
           return BitextResponse.new(response)
         rescue Net::ReadTimeout => e
+          Rails.logger.info "#{self.class} [error] bitext timed out!"
           return BitextResponse.new(e)
         end
 
