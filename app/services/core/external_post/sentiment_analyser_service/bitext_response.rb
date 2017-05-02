@@ -7,6 +7,9 @@ module Core
           "No contract found for that language",
           "Contract expired"
         ].freeze
+        KNOWN_EXCEPTIONS = [
+          Net::ReadTimeout
+        ].freeze
         HALT_CACHE_KEY = "bitext_analysis_halted".freeze
 
         delegate :body, :parsed_response, to: :@response
@@ -18,8 +21,8 @@ module Core
         def failed?
           failed = @response.is_a?(Net::ReadTimeout)
           failed = failed || @response.response.is_a?(Net::HTTPServiceUnavailable)
-          failed = failed || @response["success"] == false
-          if failed && unkown_error?
+          failed = failed || (@response["success"] == false)
+          if failed && (unkown_error? || unkown_exception?)
             log "WARN: #failed?: true! response.body: #{@response.body}"
             log "WARN: #failed?: true! response.request: #{@response.request.raw_body}"
           end
@@ -70,6 +73,19 @@ module Core
           end
         end
 
+        def unkown_exception?
+          KNOWN_EXCEPTIONS.none? do |exception_class|
+            matches = @response.is_a?(exception_class)
+            if matches
+              value = exception_class.to_s
+              expiration_time = 1.hour
+              log("[bitext-error]: #{exception_class} - won't retry for #{expiration_time}")
+              halt_bitext_with_cache(value, expiration_time)
+            end
+            matches
+          end
+        end
+
         def handle_known_error(kind)
           case kind
           when "Free request limit reached."
@@ -79,9 +95,13 @@ module Core
           else
             return
           end
+          halt_bitext_with_cache(kind, expiration_time)
+        end
+
+        def halt_bitext_with_cache(value, expiration_time)
           Rails.cache.write(
             HALT_CACHE_KEY,
-            kind,
+            value,
             expires_in: expiration_time
           )
         end
