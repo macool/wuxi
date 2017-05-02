@@ -44,6 +44,11 @@ module Core
 
         def perform_get_request(post_response)
           return if bitext_halted?
+          if post_response.result_id.blank?
+            # TODO catching bitext exceptions?
+            Rails.logger.info "#{self.class} bitext post response without result_id!"
+            Rails.logger.info post_response
+          end
           response = bitext_api.get_sentiment(
             result_id: post_response.result_id
           )
