@@ -67,7 +67,9 @@ module Core
             text: @external_post.raw_hash["text"],
             our_language: @external_post.raw_hash["lang"]
           )
-          BitextResponse.new(response)
+          return BitextResponse.new(response)
+        rescue Net::ReadTimeout => e
+          return BitextResponse.new(e)
         end
 
         def bitext_api

@@ -16,7 +16,8 @@ module Core
         end
 
         def failed?
-          failed = @response.response.is_a?(Net::HTTPServiceUnavailable)
+          failed = @response.is_a?(Net::ReadTimeout)
+          failed = failed || @response.response.is_a?(Net::HTTPServiceUnavailable)
           failed = failed || @response["success"] == false
           if failed && unkown_error?
             log "WARN: #failed?: true! response.body: #{@response.body}"
