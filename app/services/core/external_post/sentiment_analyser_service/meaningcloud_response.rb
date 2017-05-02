@@ -9,6 +9,10 @@ module Core
         # aka 200
         def ok?
           @response["status"]["msg"] == "OK"
+        # TODO catching meaningcloud exceptions?
+        rescue NoMethodError
+          log "meaningcloud response error!"
+          Rails.logger.info @response
         end
 
         def ok_for_reposting?
@@ -21,6 +25,10 @@ module Core
         end
 
         private
+
+        def log(str)
+          Rails.logger.info "#{self.class} #{str}"
+        end
 
         def score_tag_allowed_for_reposting?
           # The possible values are the following:
