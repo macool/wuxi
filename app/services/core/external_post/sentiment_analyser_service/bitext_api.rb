@@ -5,7 +5,7 @@ module Core
         include HTTParty
         base_uri "https://svc02.api.bitext.com"
         debug_output
-        default_timeout 10
+        default_timeout 20
 
         # Available languages:
         # "eng": English
