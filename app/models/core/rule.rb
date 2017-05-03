@@ -26,6 +26,7 @@ class Core::Rule
   scope :non_allowed, -> { where(allowed: false) }
   scope :searchterm, -> { where(kind: "searchterm") }
   scope :language, -> { where(kind: "language") }
+  scope :location, -> { where(kind: "location") }
 
   def is_searchterm?
     kind == "searchterm"

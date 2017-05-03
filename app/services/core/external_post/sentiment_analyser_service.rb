@@ -11,11 +11,10 @@ module Core
       end
 
       def positive?
-        analysers_answers = [
-          analyse_with_bitext!
-        ]
+        analysers_answers = []
         if @external_post.external_user.status.whitelist?
           # premium analysis?
+          analysers_answers << analyse_with_bitext!
           analysers_answers << analyse_with_meaningcloud!
         end
         analysers_answers.all?
