@@ -13,7 +13,7 @@ module Core
     end
 
     def place
-      raw_hash["place"]
+      raw_hash["location"]
     end
 
     def image
