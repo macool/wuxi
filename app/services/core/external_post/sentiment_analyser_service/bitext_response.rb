@@ -22,7 +22,7 @@ module Core
           failed = @response.is_a?(Net::ReadTimeout)
           failed = failed || @response.response.is_a?(Net::HTTPServiceUnavailable)
           failed = failed || (@response["success"] == false)
-          if failed && (unkown_error? || unkown_exception?)
+          if failed && (unkown_exception? || unkown_error?)
             log "WARN: #failed?: true! response.body: #{@response.body}"
             log "WARN: #failed?: true! response.request: #{@response.request.raw_body}"
           end
