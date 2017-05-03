@@ -12,6 +12,10 @@ module Core
       raw_hash["name"]
     end
 
+    def place
+      raw_hash["place"]
+    end
+
     def image
       raw_hash["profile_image_url"]
     end

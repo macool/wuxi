@@ -11,6 +11,8 @@
           .header = @external_user.nickname
           .meta = @external_user.name
           .description
+            = @external_user.place
+          .description
             = pluralize @external_user.posts.count, "post"
           .description
             = link_to "open twitter profile",
