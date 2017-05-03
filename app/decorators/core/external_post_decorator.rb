@@ -2,6 +2,10 @@ module Core
   class ExternalPostDecorator < ::ApplicationDecorator
     decorates_association :external_user
 
+    def place_str
+      object.raw_hash["place"] && object.raw_hash["place"]["full_name"]
+    end
+
     def to_s
       object.raw_hash["text"]
     end
