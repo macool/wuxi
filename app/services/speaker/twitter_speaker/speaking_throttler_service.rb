@@ -2,9 +2,10 @@ module Speaker
   class TwitterSpeaker
     class SpeakingThrottlerService
       THROTTLER = {
-        "500" => 3,
-        "100" => 2,
-        "0" => 1
+        "1000" => 4,
+        "500"  => 3,
+        "100"  => 2,
+        "0"    => 1
       }
 
       def initialize(scope:)
