@@ -1,20 +1,32 @@
 module Speaker
   class TwitterSpeaker
     class << self
-      THROTTLE = 1
-
       def speak!
+        active_external_providers.each do |external_provider|
+          scope = external_posts_scope_for(external_provider)
+          throttler_limit = throttler_limit_for(scope)
+          scope.limit(throttler_limit).each do |external_post|
+            new(external_post).speak!
+          end
+        end
+      end
+
+      def active_external_providers
         Core::ExternalProvider.active
                               .for_reposting
                               .with_provider(:twitter)
-                              .each do |external_provider|
-            scope = external_provider.posts
-                                     .latest
-                                     .with_status(:will_repost)
-            scope.limit(THROTTLE).each do |external_post|
-              new(external_post).speak!
-            end
-        end
+      end
+
+      def external_posts_scope_for(external_provider)
+        external_provider.posts
+                         .latest
+                         .with_status(:will_repost)
+      end
+
+      def throttler_limit_for(scope)
+        SpeakingThrottlerService.new(
+          scope: scope
+        ).throttling_limit
       end
     end
 

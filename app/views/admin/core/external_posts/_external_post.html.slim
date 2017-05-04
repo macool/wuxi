@@ -8,8 +8,9 @@
         => external_post.external_user.with_link do
           = external_post.external_user.nickname
         = external_post.external_user.name
-      .date
-        = external_post.external_user.place
+      - if external_post.external_user.place.present?
+        .date
+          = external_post.external_user.place
       = external_post.external_link class: "date" do
         = l external_post.external_created_at, format: :wuxi_admin
     .extra.text
