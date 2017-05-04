@@ -9,12 +9,12 @@ module Speaker
       }
 
       def initialize(scope:)
-        @scope = scope
+        @scope_size = scope.count
       end
 
       def throttling_limit
         mark, speed = THROTTLER.detect do |queue_size, value|
-          @scope.count >= queue_size.to_i
+          @scope_size >= queue_size.to_i
         end
         speed
       end
