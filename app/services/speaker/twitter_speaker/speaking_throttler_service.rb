@@ -2,9 +2,8 @@ module Speaker
   class TwitterSpeaker
     class SpeakingThrottlerService
       THROTTLER = {
-        "500" => 4,
-        "100" => 3,
-        "50" => 2,
+        "500" => 3,
+        "100" => 2,
         "0" => 1
       }
 
