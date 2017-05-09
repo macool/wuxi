@@ -7,5 +7,9 @@ module Core
             .latest
             .page(h.params[:page])
     end
+
+    def place
+      object.account.place
+    end
   end
 end

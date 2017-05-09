@@ -4,9 +4,12 @@ module Core
     include Mongoid::Timestamps
 
     field :name, type: String
+    field :place, type: String
     index({ name: 1 }, { unique: true })
 
     validates :name,
+              :place,
+              presence: true,
               uniqueness: true
 
     begin :relationships

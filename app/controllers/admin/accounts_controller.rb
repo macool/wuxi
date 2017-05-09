@@ -45,6 +45,7 @@ module Admin
       params.require(:account)
             .permit(
               :name,
+              :place,
               external_providers_attributes: [
                 :id,
                 :active,

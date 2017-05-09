@@ -27,6 +27,10 @@ Rails.application.routes.draw do
     resource :dashboard, only: :show
   end
 
+  namespace :api do
+    resources :external_providers, only: :index
+  end
+
   namespace :admin do
     resources :dashboard_users
     resources :banned_words

@@ -7,6 +7,10 @@
     = f.label :name
     = f.text_field :name, required: true
 
+  .field.four.wide
+    = f.label :place
+    = f.text_field :place, required: true
+
   .field.eight.wide
     = f.fields_for :rules do |builder|
       = render 'rules', f: builder
