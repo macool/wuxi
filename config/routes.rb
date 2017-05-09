@@ -28,7 +28,8 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :external_providers, only: :index
+    resources :external_providers,
+              only: [:index, :show]
   end
 
   namespace :admin do
