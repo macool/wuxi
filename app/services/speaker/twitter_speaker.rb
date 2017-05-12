@@ -12,9 +12,7 @@ module Speaker
       end
 
       def active_external_providers
-        Core::ExternalProvider.active
-                              .for_reposting
-                              .with_provider(:twitter)
+        ActiveExternalProvidersFetcher.new.external_providers
       end
 
       def external_posts_scope_for(external_provider)

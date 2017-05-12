@@ -10,3 +10,6 @@
   external_posts_scheduled_analyser_worker:
     every: 15m
     class: ExternalPostsScheduledAnalyserWorker
+  ad_posts_scheduler_worker:
+    cron: '0 8 * * *'
+    class: AdPostsSchedulerWorker
