@@ -11,7 +11,7 @@ module Core
         end
 
         def external_providers
-          Core::ExternalProvider.active.all
+          Core::ExternalProvider.active.search_active.all
         end
       end
 

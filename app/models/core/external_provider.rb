@@ -10,6 +10,7 @@ module Core
     PROVIDERS = SUPPORTED_PROVIDERS.keys.map(&:to_s).freeze
 
     field :active, type: Boolean, default: false
+    field :search_active, type: Boolean, default: false
     field :repost, type: String
     field :provider, type: String
     field :uid, type: String
@@ -40,6 +41,7 @@ module Core
     end
 
     scope :active, ->{ where(active: true) }
+    scope :search_active, -> { where(search_active: true) }
     scope :for_reposting, ->{ with_repost(:all, :whitelist) }
 
     def external_uri

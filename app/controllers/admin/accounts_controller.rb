@@ -49,6 +49,7 @@ module Admin
               external_providers_attributes: [
                 :id,
                 :active,
+                :search_active,
                 :repost,
                 :_destroy
               ],
