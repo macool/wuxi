@@ -10,7 +10,7 @@ module Speaker
               ::AdPostsSpeakerWorker.perform_in(
                 interval,
                 ad_post.id,
-                external_provider.id
+                external_provider.id.to_s
               )
             end
           end
