@@ -12,7 +12,9 @@ module Speaker
       end
 
       def active_external_providers
-        ActiveExternalProvidersFetcher.new.external_providers
+        ActiveExternalProvidersFetcher.new
+                                      .external_providers
+                                      .for_reposting
       end
 
       def external_posts_scope_for(external_provider)
