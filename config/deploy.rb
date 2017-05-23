@@ -23,7 +23,7 @@ set :deploy_to, '/home/wuxi/wuxi'
 
 # Default value for :pty is false
 set :pty, false
-set :sidekiq_monit_conf_dir, "#{shared_path}/monit_configs"
+# set :sidekiq_monit_conf_dir, "#{shared_path}/monit_configs"
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
