@@ -4,7 +4,7 @@ module Core
       class MeaningcloudApi
         include HTTParty
         base_uri "https://api.meaningcloud.com"
-        debug_output if Rails.env.development?
+        debug_output
 
         def sentiment(text:, lang:)
           self.class.post(
