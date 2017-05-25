@@ -50,6 +50,7 @@ module Admin
                 :id,
                 :active,
                 :search_active,
+                :active_for_api,
                 :repost,
                 :_destroy
               ],

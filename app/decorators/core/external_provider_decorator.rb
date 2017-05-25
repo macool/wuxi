@@ -16,7 +16,8 @@ module Core
       {
         id: object.id.to_s,
         nickname: nickname,
-        place: place
+        place: place,
+        active_for_api: active_for_api
       }
     end
   end

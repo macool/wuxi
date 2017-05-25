@@ -11,6 +11,7 @@ module Core
 
     field :active, type: Boolean, default: false
     field :search_active, type: Boolean, default: false
+    field :active_for_api, type: Boolean, default: false
     field :repost, type: String
     field :provider, type: String
     field :uid, type: String
@@ -41,6 +42,7 @@ module Core
     end
 
     scope :active, ->{ where(active: true) }
+    scope :active_for_api, ->{ active.where(active_for_api: true) }
     scope :search_active, -> { where(search_active: true) }
     scope :for_reposting, ->{ with_repost(:all, :whitelist) }
 
