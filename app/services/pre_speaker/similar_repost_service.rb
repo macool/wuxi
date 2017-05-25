@@ -45,7 +45,7 @@ module PreSpeaker
     end
 
     def stripped_content
-      @stripped_content ||= @external_post.content.gsub(
+      @stripped_content ||= @external_post.raw_hash["text"].gsub(
         /(?:f|ht)tps?:\/[^\s]+/,
         ''
       )
