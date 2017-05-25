@@ -63,9 +63,11 @@ module Core
           provider: :sentiment140,
           response: sanitize_post_response(response)
         )
-        whitelist = external_post.external_user.status.whitelist?
-        repost_all = external_post.external_provider.repost.all?
-        if response.positive? && (whitelist || repost_all)
+        reposting_candidate = PreSpeaker::RepostingCandidate.new(
+          external_post
+        )
+        if response.positive? && reposting_candidate.whitelist?
+          reposting_candidate.schedule_repost!
           external_post.update!(status: :will_repost)
         end
       end
