@@ -24,6 +24,7 @@ module Core
                 :external_user_exceeded_throttle,
                 :external_user_analysis_latest_posts,
                 :external_post_speaker_repost_error,
+                :external_post_pre_speaker_similarity,
                 :blacklist_user_banned_word_usage,
                 :admin_user_role_update
               ]

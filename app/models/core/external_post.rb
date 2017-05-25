@@ -23,6 +23,7 @@ module Core
                 :reposted,
                 :error_reposting,
                 :halted_by_user_throttler,
+                :halted_by_similarity_analyser,
                 :trash_binned
               ],
               default: :new,

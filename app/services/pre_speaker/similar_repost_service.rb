@@ -2,6 +2,8 @@ module PreSpeaker
   class SimilarRepostService
     QUEUE_SIZE = 1000
 
+    attr_reader :similar_content
+
     def initialize(external_post)
       @external_post = external_post
     end
@@ -11,7 +13,11 @@ module PreSpeaker
       # comparing against similar recent posts
       # by this external provider
       unique = recent_posts.none? do |content|
-        white_similar_to?(content) && small_distance_to?(content)
+        similar = white_similar_to?(content) && small_distance_to?(content)
+        if similar
+          @similar_content = content
+        end
+        similar
       end
       if unique
         push_to_recent_posts_queue!
