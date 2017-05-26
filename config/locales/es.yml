@@ -81,6 +81,7 @@ es:
             analysed: cubes
             will_repost: announcement
             halted_by_user_throttler: volume off
+            halted_by_similarity_analyser: volume off
         users_stats:
           whitelist: whitelisted
           icon:
