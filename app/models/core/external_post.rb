@@ -15,6 +15,7 @@ module Core
     index({ provider: 1, uid: 1 }, { unique: true })
     index({ status: 1 })
     index({ external_created_at: 1 })
+    index({ reposted_at: 1 })
 
     enumerize :status,
               in: [
@@ -50,6 +51,7 @@ module Core
     after_create :analyse!
 
     scope :latest, -> { order(external_created_at: :desc) }
+    scope :last_reposted, -> { order(reposted_at: :desc) }
     scope :for_provider, ->(provider) {
       where(provider: provider)
     }
