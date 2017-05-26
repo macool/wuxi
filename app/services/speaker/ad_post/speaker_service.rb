@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module Speaker
   class AdPost < PostSchedulerResource
     class SpeakerService
@@ -17,9 +19,14 @@ module Speaker
       private
 
       def publish_to_twitter!
-        twitter_client.update!(
-          @ad_post.repost_content
-        )
+        if @ad_post.banner_url.present?
+          twitter_client.update_with_media(
+            @ad_post.repost_content,
+            open(@ad_post.banner_url)
+          )
+        else
+          twitter_client.update! @ad_post.repost_content
+        end
       end
 
       def twitter_client
