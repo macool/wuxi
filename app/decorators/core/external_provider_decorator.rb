@@ -5,7 +5,6 @@ module Core
     def latest_posts(status)
       object.posts
             .with_status(status)
-            .latest
             .last_reposted
             .page(h.params[:page])
     end

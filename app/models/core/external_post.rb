@@ -51,7 +51,7 @@ module Core
     after_create :analyse!
 
     scope :latest, -> { order(external_created_at: :desc) }
-    scope :last_reposted, -> { order(reposted_at: :desc) }
+    scope :last_reposted, -> { order(reposted_at: :desc, external_created_at: :desc) }
     scope :for_provider, ->(provider) {
       where(provider: provider)
     }
