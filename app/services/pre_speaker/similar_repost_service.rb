@@ -1,6 +1,6 @@
 module PreSpeaker
   class SimilarRepostService
-    QUEUE_SIZE = 1000
+    QUEUE_SIZE = 300
 
     attr_reader :similar_content
 
