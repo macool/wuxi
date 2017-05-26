@@ -45,10 +45,10 @@ module PreSpeaker
     end
 
     def stripped_content
-      @stripped_content ||= @external_post.raw_hash["text"].gsub(
-        /(?:f|ht)tps?:\/[^\s]+/,
-        ''
-      )
+      @stripped_content ||=
+        @external_post.raw_hash["text"]
+                      .gsub(/(?:f|ht)tps?:\/[^\s]+/, '') # strip links
+                      .gsub(/[#@]\w+/, '') # strip mentions & hashtags
     end
 
     def white_similar_to?(content)
