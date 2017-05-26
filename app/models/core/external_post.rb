@@ -10,6 +10,7 @@ module Core
     field :external_created_at, type: Time
     field :status, type: String
     field :manually_reposted, type: Boolean, default: false
+    field :reposted_at, type: Time
 
     index({ provider: 1, uid: 1 }, { unique: true })
     index({ status: 1 })
@@ -55,6 +56,13 @@ module Core
     scope :since, ->(time_ago) {
       where(:external_created_at.gte => time_ago)
     }
+
+    def reposted!
+      update!(
+        status: :reposted,
+        reposted_at: Time.now
+      )
+    end
 
     private
 

@@ -36,7 +36,7 @@ module Speaker
 
     def speak!
       retweet!
-      @external_post.update!(status: :reposted)
+      @external_post.reposted!
     end
 
     private
