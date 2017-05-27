@@ -34,6 +34,7 @@ module Core
 
         def search_results
           last_post = @external_provider.posts.latest.first
+          log "searching #{@external_provider.account.searchterm}"
           twitter_client.search(
             @external_provider.account.searchterm,
             result_type: "recent",
