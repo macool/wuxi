@@ -31,5 +31,13 @@ module Core
         subject_type: object.class.name
       )
     end
+
+    def moderate_user_path(status:)
+      h.send(
+        :update_status_admin_external_user_path,
+        external_user,
+        commit: status
+      )
+    end
   end
 end

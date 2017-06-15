@@ -36,5 +36,9 @@ module Core
     def latest_posts
       object.posts.latest.limit(50)
     end
+
+    def can_analyse_latest_posts?
+      status.new? || status.whitelist?
+    end
   end
 end

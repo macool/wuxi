@@ -4,6 +4,7 @@ es:
       new: Nuevo
   actions:
     submit: Guardar
+    cant_update_self_user: ups, no puedes cambiar tus propios permisos!
   mongoid:
     mongoid:
       models:
@@ -134,3 +135,5 @@ es:
   time:
     formats:
       wuxi_admin: "%H:%M - %d de %B, %Y"
+  pundit:
+    not_authorized: ups, no estás autorizado

@@ -7,7 +7,8 @@
       tr
         th Nombre
         th
-        th
+        - if policy(Core::Account).edit?
+          th
     tbody
       = content_tag_for :tr, @accounts do |account|
         td = link_to account.name,
@@ -20,10 +21,12 @@
                       data: { variation: "basic",
                         content: external_provider.nickname } do
               i.icon class="#{external_provider.provider}"
-        td
-          = link_to "editar",
-                    edit_admin_account_path(account)
+        - if policy(Core::Account).edit?
+          td
+            = link_to "editar",
+                      edit_admin_account_path(account)
 
-  = link_to "Agregar cuenta",
-            new_admin_account_path,
-            class: "fluid ui teal button"
+  - if policy(Core::Account).new?
+    = link_to "Agregar cuenta",
+              new_admin_account_path,
+              class: "fluid ui teal button"

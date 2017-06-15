@@ -30,33 +30,34 @@
           = external_post.external_user.status
 
       - unless external_post.external_user.status.throttled_by_quota?
-        = link_to update_status_admin_external_user_path(external_post.external_user,
-                                                           commit: :blacklist),
-                  class: "like update-external-user-status-btn blacklist",
-                  method: :post,
-                  remote: true,
-                  disabled: external_post.external_user.status.blacklist? do
-            i.icon.angle.down
-
-        = link_to update_status_admin_external_user_path(external_post.external_user,
-                                                           commit: :whitelist),
-                  class: "like update-external-user-status-btn whitelist",
-                  method: :post,
-                  remote: true,
-                  disabled: external_post.external_user.status.whitelist? do
-          i.icon.angle.up
-
-        span.like ·
-        - if external_post.status.analysed? || external_post.status.new? || external_post.manually_reposted?
-          = link_to repost_admin_account_external_post_path(external_post,
-                                                            account_id: external_post.external_provider.account.id),
-                    class: "like repost-wrapper",
+        - if policy(external_post.external_user).blacklist?
+          = link_to external_post.moderate_user_path(status: :blacklist),
+                    class: "like update-external-user-status-btn blacklist",
                     method: :post,
-                    disabled: external_post.manually_reposted?,
-                    remote: true do
-            i.icon.retweet
+                    remote: true,
+                    disabled: external_post.external_user.status.blacklist? do
+              i.icon.angle.down
 
-      - if external_post.status.will_repost?
+        - if policy(external_post.external_user).whitelist?
+          = link_to external_post.moderate_user_path(status: :whitelist),
+                    class: "like update-external-user-status-btn whitelist",
+                    method: :post,
+                    remote: true,
+                    disabled: external_post.external_user.status.whitelist? do
+            i.icon.angle.up
+
+        - if policy(external_post).repost?
+          span.like ·
+          - if external_post.status.analysed? || external_post.status.new? || external_post.manually_reposted?
+            = link_to repost_admin_account_external_post_path(external_post,
+                                                              account_id: external_post.external_provider.account.id),
+                      class: "like repost-wrapper",
+                      method: :post,
+                      disabled: external_post.manually_reposted?,
+                      remote: true do
+              i.icon.retweet
+
+      - if external_post.status.will_repost? && policy(external_post).cancel_repost?
         = link_to cancel_repost_admin_account_external_post_path(external_post,
                                                        account_id: external_post.external_provider.account.id),
                   class: "like repost-wrapper",
@@ -64,7 +65,7 @@
                   remote: true do
           i.icon.remove.circle
 
-      - if external_post.external_user.status.blacklist?
+      - if external_post.external_user.status.blacklist? && policy(external_post).trash_bin?
         span.like ·
         = link_to trash_bin_admin_account_external_post_path(external_post,
                                                    account_id: external_post.external_provider.account.id),

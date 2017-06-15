@@ -23,7 +23,7 @@
             = image_tag @external_user.image,
                         class: "ui avatar image"
 
-        - if @external_user.status.new? || @external_user.status.whitelist?
+        - if policy(@external_user).analyse_latest_posts? && @external_user.can_analyse_latest_posts?
           .extra.content
             .ui.one.buttons
               = link_to "analyse latest posts",
@@ -33,8 +33,9 @@
                         remote: true,
                         data: { disable_with: "enviando.." }
 
-        .extra.content
-          = render "status_form"
+        - if policy(@external_user).update_status?
+          .extra.content
+            = render "status_form"
 
     .ui.feed.external-user-activities
       h4.ui.header Activity

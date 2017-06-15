@@ -1,5 +1,6 @@
 module Admin
   class AccountsController < BaseController
+    before_action :pundit_authorize
     before_action :find_account, only: [:edit, :update, :show]
 
     def index
@@ -36,6 +37,10 @@ module Admin
     end
 
     private
+
+    def pundit_authorize
+      authorize Core::Account
+    end
 
     def find_account
       @account = Core::Account.find params[:id]

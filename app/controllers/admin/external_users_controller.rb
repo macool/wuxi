@@ -1,5 +1,6 @@
 module Admin
   class ExternalUsersController < BaseController
+    before_action :pundit_authorize
     before_action :find_external_user,
                   only: [
                     :show,
@@ -45,6 +46,10 @@ module Admin
     end
 
     private
+
+    def pundit_authorize
+      authorize Core::ExternalUser
+    end
 
     def find_external_user
       @external_user = Core::ExternalUser.find params[:id]

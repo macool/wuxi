@@ -1,7 +1,8 @@
 module Admin
   class DashboardUsersController < BaseController
-    before_action :find_admin_user,
-                  only: [:show, :update]
+    before_action :pundit_authorize
+    before_action :find_admin_user, only: [:show, :update]
+    before_action :restrict_self_user, only: :update
 
     def index
       @role = params[:role] || 'user'
@@ -34,6 +35,17 @@ module Admin
     end
 
     private
+
+    def restrict_self_user
+      if @admin_user == current_user
+        flash[:error] = I18n.t("actions.cant_update_self_user")
+        redirect_to :back
+      end
+    end
+
+    def pundit_authorize
+      authorize Admin::User, :manage?
+    end
 
     def admin_user_params
       params.require(:admin_user).permit :role
