@@ -54,10 +54,10 @@ class ApplicationPolicy
   protected
 
   def is_superadmin?
-    user.present? && user.role.superadmin?
+    user.role.superadmin?
   end
 
   def is_admin?
-    user.role.admin? || is_superadmin?
+    is_superadmin? || user.role.admin?
   end
 end

@@ -1,5 +1,6 @@
 module Admin
   class ExternalPostsController < BaseController
+    before_action :pundit_authorize
     before_action :set_action_name
 
     def repost
@@ -34,6 +35,10 @@ module Admin
     end
 
     private
+
+    def pundit_authorize
+      authorize Core::ExternalPost
+    end
 
     def set_action_name
       @action_name = params[:action]

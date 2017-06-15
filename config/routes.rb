@@ -63,6 +63,6 @@ Rails.application.routes.draw do
 
     mount Sidekiq::Web => '/sidekiq', constraints: SuperadminConstraint.new
 
-    root "dashboard#index"
+    root "accounts#index"
   end
 end

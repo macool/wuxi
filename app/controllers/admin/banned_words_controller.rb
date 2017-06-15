@@ -1,5 +1,6 @@
 module Admin
   class BannedWordsController < BaseController
+    before_action :pundit_authorize
     before_action :find_banned_word, only: [:edit, :update, :destroy]
 
     def index
@@ -36,6 +37,10 @@ module Admin
     end
 
     private
+
+    def pundit_authorize
+      authorize Core::BannedWord, :manage?
+    end
 
     def find_banned_word
       @banned_word = Core::BannedWord.find params[:id]

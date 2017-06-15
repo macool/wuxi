@@ -1,36 +1,45 @@
 #main-sidebar.ui.inverted.left.vertical.sidebar.menu.segment.overlay
-  a.ui.logo.icon.image> href="/"
-    img src="http://semantic-ui.com/images/logo.png" style=("width: 35px;") /
-  a> href="/" Vengadores
+
+  /-
+    a.ui.logo.icon.image> href="/"
+      img src="http://semantic-ui.com/images/logo.png" style=("width: 35px;")
+
+  a href="/" class="item" wuxi
+
   = link_to "Dashboard",
             users_dashboard_path,
             class: "item #{'active' if params[:controller] == 'users/dashboard'}"
-  .item
-    = link_to "Cuentas",
-              admin_accounts_path,
-              class: "header"
-    .menu
-      - active_dashboard_accounts.each do |account|
-        = link_to account.name,
-                  admin_account_path(account),
-                  class: "item #{'active' if controller_name == 'accounts' && params[:id] == account.id.to_s}"
-  = link_to "Banned words",
-            admin_banned_words_path,
-            class: "item #{'active' if controller_name == 'banned_words'}"
-  = link_to "External users",
-            admin_external_users_path,
-            class: "item #{'active' if controller_name == 'external_users'}"
 
-  - if policy(Admin::User).manage?
-    = link_to "Dashboard users",
-              admin_dashboard_users_path,
-              class: "item #{'active' if controller_name == 'dashboard_users'}"
+  - if current_user.present?
+    .item
+      = link_to "Cuentas",
+                admin_accounts_path,
+                class: "header"
+      .menu
+        - active_dashboard_accounts.each do |account|
+          = link_to account.name,
+                    admin_account_path(account),
+                    class: "item #{'active' if controller_name == 'accounts' && params[:id] == account.id.to_s}"
 
-  - # TODO pundit
-  - if current_user && current_user.role.superadmin?
-    = link_to "Sidekiq",
-              admin_sidekiq_web_path,
+    - if policy(Core::BannedWord).manage?
+      = link_to "Banned words",
+                admin_banned_words_path,
+                class: "item #{'active' if controller_name == 'banned_words'}"
+
+    = link_to "External users",
+              admin_external_users_path,
+              class: "item #{'active' if controller_name == 'external_users'}"
+
+    - if policy(Admin::User).manage?
+      = link_to "Dashboard users",
+                admin_dashboard_users_path,
+                class: "item #{'active' if controller_name == 'dashboard_users'}"
+
+    - # TODO pundit
+    - if current_user.role.superadmin?
+      = link_to "Sidekiq",
+                admin_sidekiq_web_path,
+                class: "item"
+    = link_to "Cerrar Sesión",
+              destroy_user_session_path,
               class: "item"
-  = link_to "Cerrar Sesión",
-            destroy_user_session_path,
-            class: "item"
