@@ -23,5 +23,9 @@ module Core
     def analyse_latest_posts?
       is_superadmin?
     end
+
+    def search?
+      is_admin?
+    end
   end
 end

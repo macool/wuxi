@@ -3,6 +3,14 @@
     h1 External Users
 
   .eight.wide.column
+
+    - if policy(Core::ExternalUser).search?
+      = form_tag admin_external_users_path,
+                 method: :get,
+                 class: "ui form" do
+        .field.four.wide
+          = search_field_tag :query, params[:query], placeholder: "search"
+
     = render "by_status_menu"
 
     .ui.selection.list
@@ -16,3 +24,4 @@
             = external_user.name
 
     = paginate @external_users
+    = page_entries_info @external_users

@@ -12,6 +12,8 @@ module Core
 
     index({ provider: 1, uid: 1 }, { unique: true })
     index({ status: 1 })
+    index({ :"raw_hash.name" => 1 }, { background: true })
+    index({ :"raw_hash.screen_name" => 1 }, { background: true })
 
     enumerize :status,
               in: [
@@ -40,6 +42,10 @@ module Core
                       .log_activity!
                       .update_user_status!
                       .allow_more?
+    end
+
+    def self.by_screen_name(screen_name)
+      find_by :"raw_hash.screen_name" => screen_name
     end
 
     private
