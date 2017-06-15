@@ -61,7 +61,7 @@ module PreSpeaker
     end
 
     def small_distance_to?(content)
-      max_distance = 10
+      max_distance = 14
       distance = Text::Levenshtein.distance(
         content,
         stripped_content,
