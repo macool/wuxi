@@ -12,10 +12,16 @@ module Core
     field :manually_reposted, type: Boolean, default: false
     field :reposted_at, type: Time
 
+    belongs_to :external_provider,
+               class_name: "Core::ExternalProvider"
+    belongs_to :external_user,
+               class_name: "Core::ExternalUser"
+
     index({ provider: 1, uid: 1 }, { unique: true })
     index({ status: 1 })
     index({ external_created_at: 1 })
     index({ reposted_at: 1 })
+    index({ external_provider_id: 1 })
 
     enumerize :status,
               in: [
@@ -31,11 +37,6 @@ module Core
               default: :new,
               scope: true,
               i18n_scope: "external_post.status"
-
-    belongs_to :external_provider,
-               class_name: "Core::ExternalProvider"
-    belongs_to :external_user,
-               class_name: "Core::ExternalUser"
 
     validates :provider,
               presence: true,
