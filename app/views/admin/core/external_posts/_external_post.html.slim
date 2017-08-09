@@ -19,10 +19,11 @@
     .meta
       span.like = external_post.status_text
 
-      - if external_post.may_include_analysis?
-        a
-          i.icon.diamond
-          = external_post.external_analyses.decorate.map(&:score_str).join(" | ")
+      /- hidden for now
+        - if external_post.may_include_analysis?
+          a
+            i.icon.diamond
+            = external_post.external_analyses.decorate.map(&:score_str).join(" | ")
 
       span.like ·
       span.like class="external-user-#{external_post.external_user.id}-status"

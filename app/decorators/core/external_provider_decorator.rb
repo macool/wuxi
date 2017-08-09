@@ -4,6 +4,7 @@ module Core
 
     def latest_posts(status)
       object.posts
+            .includes(:external_user)
             .with_status(status)
             .last_reposted
             .page(h.params[:page])
