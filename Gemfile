@@ -54,6 +54,7 @@ gem "activeresource"
 gem "cached_resource"
 gem "text"
 gem "pundit"
+gem "newrelic_rpm"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
