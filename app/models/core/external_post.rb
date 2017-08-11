@@ -22,6 +22,15 @@ module Core
     index({ external_created_at: 1 })
     index({ reposted_at: 1 })
     index({ external_provider_id: 1 })
+    ##
+    # index for
+    # Core::ExternalProviderDecorator#latest_posts
+    index({
+      external_provider_id: 1,
+      status: 1,
+      reposted_at: 1,
+      external_created_at: 1
+    })
 
     enumerize :status,
               in: [
