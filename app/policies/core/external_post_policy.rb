@@ -11,5 +11,9 @@ module Core
     def trash_bin?
       is_admin?
     end
+
+    def undo_repost?
+      is_admin?
+    end
   end
 end

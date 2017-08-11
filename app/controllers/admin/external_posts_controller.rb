@@ -23,6 +23,16 @@ module Admin
       generic_response
     end
 
+    def undo_repost
+      scope = Core::ExternalPost.with_status(:reposted)
+      @external_post = scope.find(params[:id])
+      @external_post.undo_repost!(current_user)
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js
+      end
+    end
+
     def trash_bin
       @external_post = Core::ExternalPost.find(params[:id])
       @external_post.update!(

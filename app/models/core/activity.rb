@@ -26,7 +26,8 @@ module Core
                 :external_post_speaker_repost_error,
                 :external_post_pre_speaker_similarity,
                 :blacklist_user_banned_word_usage,
-                :admin_user_role_update
+                :admin_user_role_update,
+                :admin_user_undo_repost
               ]
 
     scope :latest, -> { order(created_at: :desc) }

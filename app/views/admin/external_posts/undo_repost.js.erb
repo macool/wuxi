@@ -1,0 +1,13 @@
+(function () {
+  var btnSelector = '.undo-repost-btn',
+      postWrapper = '#external-post-id-',
+      postId = '<%= @external_post.id %>',
+      $postEl = $(postWrapper + postId),
+      $btn = $postEl.find(btnSelector);
+
+  $btn.attr({
+    'href': null,
+    'disabled': 'disabled'
+  });
+  $btn.text('will be undone');
+})();

@@ -5,6 +5,23 @@ GIT
     mongo_session_store-rails4 (6.0.0)
       actionpack (>= 3.1)
 
+GIT
+  remote: git://github.com/sferik/twitter.git
+  revision: d66fb7334a5f5f6eaa31e0d0fb8ed12cc41bb109
+  ref: d66fb7334a5f5f6eaa31e0d0fb8ed12cc41bb109
+  specs:
+    twitter (5.15.0)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (~> 0.0.11)
+      http (~> 1.0)
+      http-form_data (~> 1.0)
+      http_parser.rb (~> 0.6.0)
+      memoizable (~> 0.4.0)
+      multipart-post (~> 2.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -137,14 +154,12 @@ GEM
     factory_girl_rails (4.6.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
-    faraday (0.11.0)
-      multipart-post (>= 1.2, < 3)
     foreman (0.78.0)
       thor (~> 0.19.1)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hashie (3.4.3)
-    http (2.2.2)
+    http (1.0.4)
       addressable (~> 2.3)
       http-cookie (~> 1.0)
       http-form_data (~> 1.0.1)
@@ -344,16 +359,6 @@ GEM
     tilt (2.0.2)
     turbolinks (2.5.3)
       coffee-rails
-    twitter (6.1.0)
-      addressable (~> 2.5)
-      buftok (~> 0.2.0)
-      equalizer (= 0.0.11)
-      faraday (~> 0.11.0)
-      http (~> 2.1)
-      http_parser.rb (~> 0.6.0)
-      memoizable (~> 0.4.2)
-      naught (~> 1.1)
-      simple_oauth (~> 0.3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (3.0.0)
@@ -422,7 +427,7 @@ DEPENDENCIES
   spring
   text
   turbolinks
-  twitter
+  twitter!
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
 

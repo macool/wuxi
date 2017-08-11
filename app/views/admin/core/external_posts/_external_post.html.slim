@@ -75,6 +75,15 @@
                   remote: true do
           i.icon.trash
 
+      - if external_post.status.reposted? && policy(external_post).undo_repost?
+        span.like ·
+        = link_to undo_repost_admin_account_external_post_path(external_post,
+                                                               account_id: external_post.external_provider.account.id),
+                  class: "like undo-repost-btn",
+                  method: :post,
+                  remote: true do
+          i.icon.window.close
+
       span.show-only-on-hover ·
       span.show-only-on-hover = external_post.language
       - if external_post.place_str.present?

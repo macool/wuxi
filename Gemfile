@@ -37,7 +37,7 @@ gem 'slim-rails'
 gem 'devise'
 gem 'omniauth-twitter'
 gem "nested_form"
-gem "twitter"
+gem "twitter", github: 'sferik/twitter', ref: 'd66fb7334a5f5f6eaa31e0d0fb8ed12cc41bb109'
 gem "draper"
 gem "enumerize"
 gem "kaminari-mongoid"

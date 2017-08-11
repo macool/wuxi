@@ -76,6 +76,13 @@ module Core
       )
     end
 
+    def undo_repost!(user)
+      ExternalPostUndoRepostWorker.perform_async(
+        id.to_s,
+        user.id.to_s
+      )
+    end
+
     private
 
     def analyse!
