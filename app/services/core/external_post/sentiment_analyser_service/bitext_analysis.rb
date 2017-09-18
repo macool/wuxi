@@ -54,13 +54,15 @@ module Core
           )
           response = BitextResponse.new(response)
           tries = 1
-          if response.incomplete? && tries < 10
-            # let's wait for the api for 3s before querying
-            # again
-            sleep 3
-            tries += 1
-            response = perform_get_request(post_response)
-          end
+          # TODO: this actually falls into an infinite loop
+          # http://pangi.shiriculapo.com/apps/57166044a2462b05eb00007e/problems/59be2c710a1e1a0c01000043
+          # if response.incomplete? && tries < 10
+          #   # let's wait for the api for 3s before querying
+          #   # again
+          #   sleep 3
+          #   tries += 1
+          #   response = perform_get_request(post_response)
+          # end
           response
         end
 
