@@ -39,6 +39,10 @@ module Core
             # TODO remove debugging
             log "WARN: #ok_for_reposting? response.body: #{@response.body}"
           end
+
+          # hotfix for http://pangi.shiriculapo.com/apps/57166044a2462b05eb00007e/problems/59bf3ff60a1e1a0c0100004a
+          return true if @response["sentimentanalysis"].nil?
+
           scores = @response["sentimentanalysis"].map do |analysis|
             analysis["score"].to_f
           end
