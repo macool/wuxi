@@ -1,5 +1,6 @@
 module Admin
   class ExternalProvidersController < BaseController
+    before_action :pundit_authorize
     before_action :find_account
 
     def new
@@ -14,6 +15,10 @@ module Admin
     end
 
     private
+
+    def pundit_authorize
+      authorize Admin::User, :manage?
+    end
 
     def find_account
       @account = Core::Account.find(params[:account_id])
