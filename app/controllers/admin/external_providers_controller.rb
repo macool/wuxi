@@ -1,6 +1,6 @@
 module Admin
   class ExternalProvidersController < BaseController
-    before_action :pundit_authorize
+    before_action :pundit_authorize!
     before_action :find_account
 
     def new
@@ -16,7 +16,7 @@ module Admin
 
     private
 
-    def pundit_authorize
+    def pundit_authorize!
       authorize Admin::User, :manage?
     end
 
