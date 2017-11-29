@@ -1,6 +1,6 @@
 module Admin
   class DashboardUsersController < BaseController
-    before_action :pundit_authorize!
+    before_action :pundit_authorize
     before_action :find_admin_user, only: [:show, :update]
     before_action :restrict_self_user, only: :update
 
@@ -43,7 +43,7 @@ module Admin
       end
     end
 
-    def pundit_authorize!
+    def pundit_authorize
       authorize Admin::User, :manage?
     end
 
