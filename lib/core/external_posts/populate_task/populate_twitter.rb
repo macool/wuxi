@@ -35,19 +35,22 @@ module Core
         def search_results
           last_post = @external_provider.posts.latest.first
           log "searching #{@external_provider.account.searchterm}"
-          twitter_client.search(
-            @external_provider.account.searchterm,
-            result_type: "recent",
-            count: collector_size,
-            since_id: last_post.try(:uid) # may be empty
-          )
-        rescue Twitter::Error::Unauthorized => e
-          Airbrake.notify(e, parameters: {
-            account: @external_provider.account.name,
-            account_id: @external_provider.account.id,
-            external_provider_id: @external_provider.id,
-            external_provider_uid: @external_provider.uid
-          })
+          begin
+            twitter_client.search(
+              @external_provider.account.searchterm,
+              result_type: "recent",
+              count: collector_size,
+              since_id: last_post.try(:uid) # may be empty
+            )
+          rescue Twitter::Error::Unauthorized => e
+            Airbrake.notify(e, parameters: {
+              account: @external_provider.account.name,
+              account_id: @external_provider.account.id,
+              external_provider_id: @external_provider.id,
+              external_provider_uid: @external_provider.uid
+            })
+            [ ]
+          end
         end
 
         def save?(tweet)
