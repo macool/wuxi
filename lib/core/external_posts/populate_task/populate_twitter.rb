@@ -41,6 +41,13 @@ module Core
             count: collector_size,
             since_id: last_post.try(:uid) # may be empty
           )
+        rescue Twitter::Error::Unauthorized => e
+          Airbrake.notify("Oops, can't query twitter!",
+            error_str: e.to_s,
+            account: @external_provider.account.name,
+            external_provider_id: @external_provider.id,
+            external_provider_uid: @external_provider.uid
+          )
         end
 
         def save?(tweet)
